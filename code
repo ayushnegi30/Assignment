@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    //step-1 : Declaration and input
+    string str;
+    int k;
+    cout << "Enter the string" << endl;
+    cin >> str;
+    
+    cout << "Enter the value of k" << endl;
+    cin >> k;
+    
+    //Step-1 : store the character and their frequency into map
+    map<char,int>mp;
+    for(char ch: str){
+        mp[ch]++;
+    }
+    
+    //step-3 : construct a maxheap and input element into it
+    priority_queue<int>maxheap;
+    for(auto it : mp){
+        maxheap.push(it.second);
+    }
+    //step-4 : reduce the frequency
+    while(!maxheap.empty() && k > 0){
+        int top = maxheap.top();
+        maxheap.pop();
+        if(top > 1)
+        maxheap.push(top-1);
+        
+        k--;
+    }
+    //step-4 : compute the sum of square
+    int ans = 0;
+    while(!maxheap.empty()){
+        int top = maxheap.top();
+        maxheap.pop();
+        ans += (top*top);
+    }
+    cout << "the minimum frequency is" << " " << ans;
+}    
